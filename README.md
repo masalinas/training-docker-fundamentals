@@ -9,8 +9,8 @@ Material técnico y pedagógico completo para impartir el curso oficial de **Doc
   - Disponible tanto en archivo editable PowerPoint (`.pptx`) como exportado a documento vectorial listo para proyección/impresión (`.pdf`).
   - Notas del orador exhaustivas en cada diapositiva con explicaciones técnicas a bajo nivel, preguntas de interacción para dinamizar la clase y comandos de terminal en directo.
   - Esquemas y diagramas arquitectónicos nativos (motor OCI, aislamiento de kernel con namespaces/cgroups, redes virtuales y topología de Kubernetes).
-- **Guía Docente (`GUIA_DEL_DOCENTE.md`)**:
-  - Manual de vuelo del instructor con más de 1.200 líneas.
+- **Guía Docente (`GUIA_DEL_DOCENTE.md` y `GUIA_DEL_DOCENTE.pdf`)**:
+  - Manual de vuelo del instructor con más de 2.100 líneas (41 páginas en formato PDF editorial imprimible).
   - Ficha técnica, prerrequisitos y preparación del entorno de aula.
   - Cronograma oficial de 4 días × 5 horas (desglose horario, pausas café y bloques de laboratorio).
   - Guion didáctico slide a slide (del 1 al 81) con el contenido y notas íntegras.
@@ -26,12 +26,17 @@ Material técnico y pedagógico completo para impartir el curso oficial de **Doc
 
 ## Recompilación de Materiales
 
-El proyecto incluye el generador programático en Python (`python-pptx`):
+El mazo de diapositivas cuenta con un compilador modular en Node.js (`pptxgenjs` + `react-icons` + `sharp`) que proporciona el sistema visual corporativo de alta fidelidad (tarjetas elevadas, alarmas, badges circulares y diagramas vectoriales):
 
 ```bash
-# Recompilar la presentación PPTX (81 diapositivas):
-python3 generate_deck.py
+# Compilar la presentación PPTX (81 diapositivas) y exportar automáticamente a PDF:
+node presentacion/src/build.js
+# O equivalentemente:
+npm run build:deck
 
 # Recompilar la Guía Docente en Markdown:
 python3 build_teaching_guide.py
+
+# Exportar la Guía Docente a PDF editorial:
+node export_guide_to_pdf.js
 ```

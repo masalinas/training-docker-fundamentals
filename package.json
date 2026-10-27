@@ -1,0 +1,19 @@
+{
+  "name": "training-docker-fundamentals",
+  "version": "1.0.0",
+  "description": "Curso Docker Fundamentals 20 Horas - Material formativo, diapositivas y laboratorios",
+  "main": "presentacion/src/build.js",
+  "scripts": {
+    "build:deck": "node presentacion/src/build.js",
+    "build:guide:pdf": "node export_guide_to_pdf.js",
+    "build:all": "npm run build:deck && npm run build:guide:pdf"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1",
+    "pptxgenjs": "^4.0.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-icons": "^5.7.0",
+    "sharp": "^0.35.5"
+  }
+}
