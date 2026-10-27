@@ -1,5 +1,5 @@
 # ==========================================
-# .gitignore — Curso SQL Server DBA (25h)
+# .gitignore — Curso Docker Fundamentals (20h)
 # ==========================================
 
 # Dependencias y entornos virtuales
@@ -54,5 +54,3 @@ sheet-*.jpg
 .env.*
 !.env.example
 
-GUIA_DEL_DOCENTE.md
-GUIA_DEL_DOCENTE.pdf
