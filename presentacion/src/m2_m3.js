@@ -444,7 +444,7 @@ function buildModule2And3(pres) {
     });
 
     card(s, {
-      x: CX, y: CY, w: 5.6, h: CH,
+      x: CX, y: CY, w: 4.8, h: CH,
       title: 'Objetivos del Laboratorio 2',
       icon: 'FaTools',
       tone: 'light',
@@ -461,21 +461,25 @@ function buildModule2And3(pres) {
     });
 
     code(s, {
-      x: CX + 5.9, y: CY, w: CW - 5.9, h: CH,
+      x: CX + 5.1, y: CY, w: CW - 5.1, h: CH,
+      size: 10,
       label: 'RESOLUCIÓN DEL LABORATORIO 2',
       code: [
         '# 1. Crear red de trabajo personalizada',
         '$ docker network create --driver bridge mi-red-app',
         '',
         '# 2. Desplegar Redis en segundo plano',
-        '$ docker run -d --name cache-redis --network mi-red-app redis:alpine',
+        '$ docker run -d --name cache-redis \\',
+        '    --network mi-red-app redis:alpine',
         '',
         '# 3. Probar resolución DNS embebida por nombre',
-        '$ docker run --rm --network mi-red-app alpine ping -c 2 cache-redis',
+        '$ docker run --rm --network mi-red-app alpine \\',
+        '    ping -c 2 cache-redis',
         '',
         '# 4. Crear red independiente de auditoría',
         '$ docker network create red-auditoria',
-        '$ docker run -d --name app-aislada --network red-auditoria alpine sleep 3600',
+        '$ docker run -d --name app-aislada \\',
+        '    --network red-auditoria alpine sleep 3600',
         '',
         '# 5. Conectar en caliente el contenedor a la primera red',
         '$ docker network connect mi-red-app app-aislada',
@@ -753,7 +757,7 @@ function buildModule2And3(pres) {
     });
 
     card(s, {
-      x: CX, y: CY, w: 5.6, h: CH,
+      x: CX, y: CY, w: 4.8, h: CH,
       title: 'La Herramienta del Desarrollador',
       icon: 'FaCode',
       tone: 'light',
@@ -766,7 +770,8 @@ function buildModule2And3(pres) {
     });
 
     code(s, {
-      x: CX + 5.9, y: CY, w: CW - 5.9, h: CH,
+      x: CX + 5.1, y: CY, w: CW - 5.1, h: CH,
+      size: 10,
       label: 'USO SEGURO Y RESOLUCIÓN DE PERMISOS',
       code: [
         '# 1. Montaje para desarrollo web con recarga en caliente',
@@ -782,7 +787,8 @@ function buildModule2And3(pres) {
         '    -v "$(pwd):/workspace" mi-compilador make',
         '',
         '# 3. Sintaxis explícita con --mount en solo lectura:',
-        '$ docker run --mount type=bind,source=/etc/ssl,target=/certs,readonly nginx'
+        '$ docker run --mount type=bind,source=/etc/ssl,target=/certs,readonly \\',
+        '    nginx'
       ].join('\n')
     });
   }
@@ -1071,7 +1077,7 @@ function buildModule2And3(pres) {
     });
 
     card(s, {
-      x: CX, y: CY, w: 5.6, h: CH,
+      x: CX, y: CY, w: 4.8, h: CH,
       title: 'Objetivos del Laboratorio 3',
       icon: 'FaTools',
       tone: 'light',
@@ -1087,7 +1093,8 @@ function buildModule2And3(pres) {
     });
 
     code(s, {
-      x: CX + 5.9, y: CY, w: CW - 5.9, h: CH,
+      x: CX + 5.1, y: CY, w: CW - 5.1, h: CH,
+      size: 9.5,
       label: 'RESOLUCIÓN DEL LABORATORIO 3',
       code: [
         '# PARTE A: Persistencia con Named Volume',
@@ -1095,18 +1102,22 @@ function buildModule2And3(pres) {
         '$ docker run -d --name db-test -v db_datos:/var/lib/postgresql/data \\',
         '    -e POSTGRES_PASSWORD=secreto postgres:16-alpine',
         '$ docker exec -i db-test psql -U postgres -c \\',
-        '    "CREATE TABLE alumnos (id int, nombre text); INSERT INTO alumnos VALUES (1, \'Ana\');"',
+        '    "CREATE TABLE alumnos (id int, nombre text); \\',
+        '     INSERT INTO alumnos VALUES (1, \'Ana\');"',
         '$ docker rm -f db-test',
         '$ docker run -d --name db-recuperada -v db_datos:/var/lib/postgresql/data \\',
         '    -e POSTGRES_PASSWORD=secreto postgres:16-alpine',
-        '$ docker exec -i db-recuperada psql -U postgres -c "SELECT * FROM alumnos;"',
+        '$ docker exec -i db-recuperada psql -U postgres -c \\',
+        '    "SELECT * FROM alumnos;"',
         '',
         '# PARTE B: Desarrollo Ágil con Bind Mount',
-        '$ mkdir -p ~/web-dev && echo "<h1>Version 1.0</h1>" > ~/web-dev/index.html',
-        '$ docker run -d --name dev-nginx -p 8080:80 -v ~/web-dev:/usr/share/nginx/html:ro nginx:alpine',
+        '$ mkdir -p ~/web-dev && echo "<h1>V 1.0</h1>" > ~/web-dev/index.html',
+        '$ docker run -d --name dev-nginx -p 8080:80 \\',
+        '    -v ~/web-dev:/usr/share/nginx/html:ro nginx:alpine',
         '$ curl http://localhost:8080',
-        '$ echo "<h1>Version 2.0 (En Vivo)</h1>" > ~/web-dev/index.html',
-        '$ curl http://localhost:8080  # ¡Cambio instantáneo!'
+        '$ echo "<h1>V 2.0 (En Vivo)</h1>" > ~/web-dev/index.html',
+        '# ¡Cambio instantáneo en el navegador!',
+        '$ curl http://localhost:8080'
       ].join('\n')
     });
   }

@@ -652,7 +652,7 @@ function buildModule4(pres) {
     });
 
     card(s, {
-      x: CX, y: CY, w: 5.6, h: CH,
+      x: CX, y: CY, w: 4.8, h: CH,
       title: 'Evolución de GCR a Artifact Registry',
       icon: 'FaDatabase',
       tone: 'light',
@@ -665,11 +665,13 @@ function buildModule4(pres) {
     });
 
     code(s, {
-      x: CX + 5.9, y: CY, w: CW - 5.9, h: CH,
+      x: CX + 5.1, y: CY, w: CW - 5.1, h: CH,
+      size: 10,
       label: 'FLUJO EN GOOGLE ARTIFACT REGISTRY',
       code: [
-        '# 1. Configurar credenciales de Docker para Artifact Registry',
-        '$ gcloud auth configure-docker europe-west1-docker.pkg.dev',
+        '# 1. Configurar credenciales de Docker para el Registry',
+        '$ gcloud auth configure-docker \\',
+        '    europe-west1-docker.pkg.dev',
         '',
         '# 2. Etiquetar la imagen local con el formato regional',
         '$ docker tag mi-app:1.0 \\',

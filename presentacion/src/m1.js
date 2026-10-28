@@ -610,7 +610,7 @@ function buildModule1(pres) {
         title: 'Stopped',
         body: 'El proceso finaliza tras recibir SIGTERM o SIGKILL. El sistema de archivos R/W persiste en disco hasta hacer `docker rm`.'
       }
-    ], { y: CY, h: 2.5 });
+    ], { y: CY, h: 2.55, size: 11.5 });
 
     cardsRow(s, [
       {
@@ -632,7 +632,7 @@ function buildModule1(pres) {
           { lead: 'Mitigación con `--init`:', text: 'Inyectar un mini-init (`tini`) para propagar señales y cosechar procesos zombies.' }
         ]
       }
-    ], { y: CY + 2.75, h: 2.1 });
+    ], { y: CY + 2.8, h: 2.05 });
   }
 
   // ─── Diapositiva 15: Comandos Esenciales de Gestión ───

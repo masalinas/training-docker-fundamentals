@@ -443,7 +443,7 @@ function buildModule5(pres) {
     });
 
     card(s, {
-      x: CX, y: CY, w: 5.6, h: CH,
+      x: CX, y: CY, w: 4.8, h: CH,
       title: 'Filosofía del Bucle de Control Infinito',
       icon: 'FaSyncAlt',
       tone: 'light',
@@ -456,21 +456,24 @@ function buildModule5(pres) {
     });
 
     code(s, {
-      x: CX + 5.9, y: CY, w: CW - 5.9, h: CH,
+      x: CX + 5.1, y: CY, w: CW - 5.1, h: CH,
+      size: 10,
       label: 'LÓGICA DEL RECONCILIADOR EN KUBERNETES',
       code: [
         '# Pseudocódigo conceptual del Controller Manager:',
         'while True:',
-        '    desired_state = read_from_etcd()          # spec.replicas = 3',
-        '    current_state = inspect_active_pods()     # actual_pods = 2',
+        '    # 1. Leer estado deseado vs estado actual',
+        '    desired = read_from_etcd()       # spec.replicas = 3',
+        '    current = inspect_active_pods()  # actual_pods = 2',
         '',
-        '    if current_state != desired_state:',
+        '    # 2. Reconciliar si existe discrepancia',
+        '    if current != desired:',
         '        diff = calculate_diff(desired, current)',
-        '        execute_reconcile_action(diff)        # Crea 1 Pod nuevo',
+        '        execute_reconcile(diff)      # Crea 1 Pod nuevo',
         '',
-        '    wait_for_watch_event()                    # Arquitectura reactiva',
+        '    wait_for_watch_event()           # Arquitectura reactiva',
         '',
-        '# ¡Esto ocurre las 24 horas del día sin intervención humana!'
+        '# ¡Bucle activo 24/7 sin intervención humana!'
       ].join('\n')
     });
   }
@@ -611,7 +614,7 @@ function buildModule5(pres) {
     });
 
     card(s, {
-      x: CX, y: CY, w: 5.6, h: CH,
+      x: CX, y: CY, w: 4.8, h: CH,
       title: 'Abstracción de Red Estable',
       icon: 'FaNetworkWired',
       tone: 'light',
@@ -624,7 +627,8 @@ function buildModule5(pres) {
     });
 
     code(s, {
-      x: CX + 5.9, y: CY, w: CW - 5.9, h: CH,
+      x: CX + 5.1, y: CY, w: CW - 5.1, h: CH,
+      size: 10,
       label: 'MANIFIESTO YAML DE UN SERVICE',
       code: [
         'apiVersion: v1',
@@ -634,12 +638,13 @@ function buildModule5(pres) {
         'spec:',
         '  type: ClusterIP',
         '  selector:',
-        '    app: pedidos        # Conecta con los Pods que tengan este label',
+        '    # Conecta con los Pods que tengan este label',
+        '    app: pedidos',
         '  ports:',
-        '  - port: 80             # Puerto de escucha del Service',
-        '    targetPort: 3000     # Puerto real del contenedor',
+        '  - port: 80         # Puerto de escucha del Service',
+        '    targetPort: 3000 # Puerto real del contenedor',
         '',
-        '# Cualquier Pod del clúster puede consumir la API invocando:',
+        '# Consumible desde cualquier Pod mediante DNS interno:',
         '# http://servicio-pedidos:80'
       ].join('\n')
     });

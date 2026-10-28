@@ -346,26 +346,26 @@ function closing(pres, { mod = 5, title, points, notes: nt }) {
   const rec = register(s, { mod, title, kind: 'closing' });
 
   s.addText(title, {
-    x: 0.8, y: 0.8, w: 11.7, h: 1.0,
-    fontFace: FONT.head, fontSize: 38, bold: true, color: COL.WHITE, margin: 0, valign: 'middle'
+    x: 0.8, y: 0.65, w: 11.7, h: 0.9,
+    fontFace: FONT.head, fontSize: 36, bold: true, color: COL.WHITE, margin: 0, valign: 'middle'
   });
 
   const n = points.length;
-  const cw = (11.7 - (n - 1) * 0.3) / n;
+  const cw = (11.7 - (n - 1) * 0.28) / n;
   points.forEach((p, i) => {
-    const x = 0.8 + i * (cw + 0.3);
+    const x = 0.8 + i * (cw + 0.28);
     s.addShape(SHAPE.roundRect, {
-      x, y: 2.3, w: cw, h: 3.5,
+      x, y: 1.85, w: cw, h: 4.75,
       rectRadius: 0.12, fill: { color: COL.WHITE, transparency: 90 }, line: { type: 'none' }
     });
-    iconCircle(s, p.icon, x + 0.3, 2.6, 0.7, { fill: COL.CYAN, color: COL.NAVY });
+    iconCircle(s, p.icon, x + 0.25, 2.1, 0.65, { fill: COL.CYAN, color: COL.NAVY });
     s.addText(p.title, {
-      x: x + 0.3, y: 3.55, w: cw - 0.6, h: 0.6,
-      fontFace: FONT.head, fontSize: 18, bold: true, color: COL.WHITE, margin: 0, valign: 'top'
+      x: x + 0.22, y: 2.9, w: cw - 0.44, h: 0.65,
+      fontFace: FONT.head, fontSize: 17, bold: true, color: COL.WHITE, margin: 0, valign: 'top'
     });
     s.addText(p.text, {
-      x: x + 0.3, y: 4.25, w: cw - 0.6, h: 1.35,
-      fontFace: FONT.body, fontSize: 14, color: 'DCE6F2', margin: 0, valign: 'top'
+      x: x + 0.22, y: 3.65, w: cw - 0.44, h: 2.7,
+      fontFace: FONT.body, fontSize: 12.5, color: 'DCE6F2', margin: 0, valign: 'top'
     });
   });
 
@@ -475,14 +475,14 @@ function cardsGrid(slideObj, cards, { cols = 2, x = CX, y = CY, w = CW, h = CH, 
 /**
  * Bloque de código con fondo oscuro de consola (estilo terminal moderna).
  */
-function code(slideObj, { x, y, w, h, code: src, label = 'BASH / DOCKER CLI', size = 11, dark = true }) {
+function code(slideObj, { x, y, w, h, code: src, label = 'BASH / DOCKER CLI', size = 10.5, dark = true, wrap = false }) {
   const bg = dark ? COL.CODEBG : COL.ICE;
   const ln = dark ? null : COL.LINE;
   rect(slideObj, { x, y, w, h, fill: bg, radius: 0.1, line: ln });
 
   // Píldora de encabezado de consola
   slideObj.addText(label, {
-    x: x + 0.2, y: y + 0.1, w: 4, h: 0.24,
+    x: x + 0.2, y: y + 0.1, w: Math.min(4.5, w - 0.4), h: 0.24,
     fontFace: FONT.body, fontSize: 9.5, bold: true, color: dark ? COL.CYAN : COL.COBALT, margin: 0, charSpacing: 1
   });
 
@@ -493,16 +493,23 @@ function code(slideObj, { x, y, w, h, code: src, label = 'BASH / DOCKER CLI', si
     let bld = false;
     if (l.trim().startsWith('#')) {
       col = dark ? '64748B' : '6B7280'; // Comentario
-    } else if (l.trim().startsWith('docker ') || l.trim().startsWith('FROM ') || l.trim().startsWith('RUN ') || l.trim().startsWith('COPY ')) {
-      col = dark ? '38BDF8' : '0284C7'; // Comando o instrucción Dockerfile
+    } else if (
+      l.trim().startsWith('docker ') ||
+      l.trim().startsWith('FROM ') ||
+      l.trim().startsWith('RUN ') ||
+      l.trim().startsWith('COPY ') ||
+      l.trim().startsWith('kubectl ') ||
+      l.trim().startsWith('gcloud ')
+    ) {
+      col = dark ? '38BDF8' : '0284C7'; // Comando o instrucción
       bld = true;
     }
     runs.push({ text: l, options: { fontFace: FONT.code, fontSize: size, color: col, bold: bld, breakLine: idx < lines.length - 1 } });
   });
 
   slideObj.addText(runs, {
-    x: x + 0.22, y: y + 0.38, w: w - 0.44, h: h - 0.46,
-    margin: 0, valign: 'top', fontFace: FONT.code, fontSize: size, wrap: false
+    x: x + 0.2, y: y + 0.38, w: w - 0.38, h: h - 0.44,
+    margin: 0, valign: 'top', fontFace: FONT.code, fontSize: size, wrap: wrap
   });
 }
 
@@ -552,24 +559,24 @@ function table(slideObj, rows, { x = CX, y = CY, w = CW, colW, size = 12, headSi
 /**
  * Secuencia de pasos numerados horizontales con flechas.
  */
-function steps(slideObj, items, { x = CX, y = CY, w = CW, h = CH, dir = 'h', gap = 0.32, size = 13, accent = COL.COBALT } = {}) {
+function steps(slideObj, items, { x = CX, y = CY, w = CW, h = CH, dir = 'h', gap = 0.32, size = 12, accent = COL.COBALT } = {}) {
   const n = items.length;
   if (dir === 'h') {
     const cw = (w - gap * (n - 1)) / n;
     items.forEach((it, i) => {
       const cx = x + i * (cw + gap);
       rect(slideObj, { x: cx, y, w: cw, h, fill: COL.WHITE, radius: 0.12, shadowOn: true, line: COL.LINE });
-      slideObj.addShape(SHAPE.ellipse, { x: cx + 0.22, y: y + 0.22, w: 0.52, h: 0.52, fill: { color: accent }, line: { type: 'none' } });
+      slideObj.addShape(SHAPE.ellipse, { x: cx + 0.2, y: y + 0.2, w: 0.48, h: 0.48, fill: { color: accent }, line: { type: 'none' } });
       slideObj.addText(String(i + 1), {
-        x: cx + 0.22, y: y + 0.22, w: 0.52, h: 0.52,
-        fontFace: FONT.head, fontSize: 17, bold: true, color: COL.WHITE, align: 'center', valign: 'middle', margin: 0
+        x: cx + 0.2, y: y + 0.2, w: 0.48, h: 0.48,
+        fontFace: FONT.head, fontSize: 16, bold: true, color: COL.WHITE, align: 'center', valign: 'middle', margin: 0
       });
       slideObj.addText(it.title, {
-        x: cx + 0.22, y: y + 0.9, w: cw - 0.44, h: 0.65,
+        x: cx + 0.2, y: y + 0.78, w: cw - 0.4, h: 0.38,
         fontFace: FONT.head, fontSize: 15, bold: true, color: COL.NAVY, margin: 0, valign: 'top'
       });
       slideObj.addText(it.body, {
-        x: cx + 0.22, y: y + 1.6, w: cw - 0.44, h: h - 1.75,
+        x: cx + 0.2, y: y + 1.22, w: cw - 0.4, h: h - 1.34,
         fontFace: FONT.body, fontSize: size, color: COL.TEXT, margin: 0, valign: 'top'
       });
       if (i < n - 1) {
